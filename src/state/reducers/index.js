@@ -122,8 +122,6 @@ export default function reducer(state = initialState, action) {
                     }
                     return team;
                 });
-
-                return draft;
             }
         }
     });
