@@ -1,4 +1,5 @@
-//import types from '../actions/studentsTypes';
+import produce from 'immer';
+import types from '../actions/types';
 
 export const initialState = {
     teams: [
@@ -75,18 +76,23 @@ export const initialState = {
     ]
 };
 
-export default function studentsReducer(state = initialState, action) {
-    const { payload, type } = action;
+export default function reducer(state = initialState, action) {
+    return produce(state, draft => {
+        const { payload, type } = action;
+        switch (type) {
+            case types.UPDATE_GAME: {
+                const { winner, loser } = payload.game;
+                const loserRecord = (loser.wins / loser.games()).toFixed(3) * 1000 || 0;
+                console.log(loserRecord);
 
-    switch (type) {
-        case 'hello': {
-            return {
-                ...state,
-                students: [...state.students, payload.student]
-            };
+                // winner.wins++
+                // winner.points += loserRecord
+                // loser.losses++
+                return {
+                    ...state
+                    //students: [...state.students, payload.student]
+                };
+            }
         }
-        default: {
-            return state;
-        }
-    }
+    });
 }
